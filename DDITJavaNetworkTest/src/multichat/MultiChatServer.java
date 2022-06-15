@@ -141,8 +141,8 @@ public class MultiChatServer {
 				while (dis != null) {
 					String userMessage = dis.readUTF();
 					//-1이면 일반 대화
-					System.out.println("구분 : "+userMessage.indexOf("/w"));
 					if(userMessage.indexOf("/w")==0) {
+						System.out.println("구분 : 귓속말");
 						System.out.println("귓속말 실행");
 						//귓속말 전용 데이터 분리
 						String[] userMessages = userMessage.split(" ");
@@ -157,6 +157,7 @@ public class MultiChatServer {
 						
 						sendMessage(str, name, userMessages[1]);
 					}else {
+						System.out.println("구분 : 일반 채팅");
 						sendMessage(userMessage, name); 
 					}
 				}
