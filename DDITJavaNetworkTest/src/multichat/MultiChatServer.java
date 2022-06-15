@@ -94,7 +94,11 @@ public class MultiChatServer {
 	public void sendMessage(String msg, String from, String to) {
 		try {
 			DataOutputStream dos = new DataOutputStream(clients.get(to).getOutputStream());//보낼사람의 소켓을 가져옴
-			dos.writeUTF("[" + from + "님의 귓속말]" + msg);
+			if(from.equals("system")) {
+				dos.writeUTF("[" + from + "] " + msg);
+			}else {
+			dos.writeUTF("[" + from + "님의 귓속말] " + msg);
+			}
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -140,22 +144,30 @@ public class MultiChatServer {
 				// 한 클라이언트가 보낸 메세지를 다른 모든 클라이언트에게 보내준다.
 				while (dis != null) {
 					String userMessage = dis.readUTF();
-					//-1이면 일반 대화
+					//0이면 귓속말, -1이면 일반 대화
 					if(userMessage.indexOf("/w")==0) {
-						System.out.println("구분 : 귓속말");
-						System.out.println("귓속말 실행");
 						//귓속말 전용 데이터 분리
-						String[] userMessages = userMessage.split(" ");
-						int length = userMessages.length;
-						System.out.println("귓속말 수신자 : " + userMessages[1]);
-						
-						String str = "";
-						for(int i = 2 ; i < length ; i++) {
-							str += userMessages[i] + " ";
+						String[] whisperMessage = userMessage.split(" ");
+						//수신자 이름 데이터 서버에 출력
+						String toUser = whisperMessage[1];
+						for (String user : clients.keySet()) {
+							if(toUser.equals(user)) {
+								System.out.println("구분 : 귓속말");
+								System.out.println("귓속말 수신자 : " + toUser);
+								//귓속말 내용을 msg에 담아서 서버에 출력
+								int length = whisperMessage.length;
+								String msg = "";
+								for(int i = 2 ; i < length ; i++) {
+									msg += whisperMessage[i] + " ";
+								}
+								System.out.println("귓속말 내용 : " + msg);
+								
+								sendMessage(msg, name, toUser);
+							}else {
+								sendMessage("귓속말 대상이 잘못되었습니다.", "system", name);
+							}
 						}
-						System.out.println("귓속말 내용 : " + str);
-						
-						sendMessage(str, name, userMessages[1]);
+						//귓속말 기능 사용시 서버에 출력
 					}else {
 						System.out.println("구분 : 일반 채팅");
 						sendMessage(userMessage, name); 
