@@ -12,7 +12,7 @@ public class MultiChatClient {
 	public void clientstart() {
 		Socket socket = null;
 		try {
-			socket = new Socket("192.168.141.16", 7777);
+			socket = new Socket("localhost", 7777);
 			System.out.println("서버에 연결되었습니다\\(^@^)/");
 
 			// 송신용 스레드 생성
