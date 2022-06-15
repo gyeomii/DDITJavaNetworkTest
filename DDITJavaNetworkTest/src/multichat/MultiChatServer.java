@@ -147,6 +147,7 @@ public class MultiChatServer {
 					//0이면 귓속말, -1이면 일반 대화
 					if(userMessage.indexOf("/w")==0) {
 						//귓속말 전용 데이터 분리
+						// /w 성겸 안녕
 						String[] whisperMessage = userMessage.split(" ");
 						//수신자 이름 데이터 서버에 출력
 						String toUser = whisperMessage[1];
