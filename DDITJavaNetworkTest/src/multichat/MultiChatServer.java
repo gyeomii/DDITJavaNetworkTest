@@ -129,7 +129,7 @@ public class MultiChatServer {
 
 				// 대화명을 받아서 다른 모든 클라이언트에세 대화방 참여 메시지를 보낸다.
 				sendMessage("#" + name + "님이 입장~! \\(^@^)/");
-				sendMessage("귓속말을 하려면 [\\w 닉네임 메시지] 형식으로 입력하세요.");
+				sendMessage("귓속말을 하려면 [/w 닉네임 메시지] 형식으로 입력하세요.");
 
 				// 대화명과 소켓 정보를 Map에 저장한다.
 				clients.put(name, socket);
@@ -140,8 +140,9 @@ public class MultiChatServer {
 				// 한 클라이언트가 보낸 메세지를 다른 모든 클라이언트에게 보내준다.
 				while (dis != null) {
 					String userMessage = dis.readUTF();
-					System.out.println("구분:"+userMessage.indexOf("\\w"));
-					if(userMessage.indexOf("\\w")==0) {
+					//-1이면 일반 대화
+					System.out.println("구분 : "+userMessage.indexOf("/w"));
+					if(userMessage.indexOf("/w")==0) {
 						System.out.println("귓속말 실행");
 						//귓속말 전용 데이터 분리
 						String[] userMessages = userMessage.split(" ");
