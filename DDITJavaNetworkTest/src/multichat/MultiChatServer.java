@@ -147,7 +147,7 @@ public class MultiChatServer {
 						//귓속말 전용 데이터 분리
 						String[] userMessages = userMessage.split(" ");
 						int length = userMessages.length;
-						System.out.println("귓속말 보낼 사람 : " + userMessages[1]);
+						System.out.println("귓속말 수신자 : " + userMessages[1]);
 						
 						String str = "";
 						for(int i = 2 ; i < length ; i++) {
