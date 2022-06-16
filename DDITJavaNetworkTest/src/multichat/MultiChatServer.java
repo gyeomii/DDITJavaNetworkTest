@@ -206,7 +206,7 @@ public class MultiChatServer {
 					} else if (messageArr[0].equalsIgnoreCase("/help")) {
 						alarm = "help";
 						alarmMessage(name, alarm);
-						
+					
 						// "/"가 포함되었으나 형식이 잘못되었거나 지정 명령어가 아닐때
 					} else if ( messageArr.length != 1 && messageArr[0].indexOf("/") == 0 && !messageArr[0].equalsIgnoreCase("/help")) {
 						alarm = "warn";
