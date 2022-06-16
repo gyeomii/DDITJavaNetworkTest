@@ -113,13 +113,13 @@ public class MultiChatServer {
 	}
 
 	/**
-	 * 귓속말을 형식에 맞춰주는 메소드
+	 * 유저가 데이터에 있는지 확인하는 메소드
 	 * 
 	 * @param messageArr
 	 * @param from
 	 * @param to
 	 */
-	public void sortMessage(String[] messageArr, String from, String to) {
+	public void checkUserName(String[] messageArr, String from, String to) {
 		// 수신자 이름 데이터 서버에 출력
 		for (String user : clients.keySet()) {
 			if (to.equals(user)) {
@@ -196,14 +196,14 @@ public class MultiChatServer {
 					// 귓속말 판별 ( 1. /w 이후에 보낼 대상이 있을것, 2. /w가 포함될 것
 					if (messageArr.length != 1 && messageArr[0].equalsIgnoreCase("/w")) {
 						// 귓속말 메소드 실행
-						// sortMessage( 내용, 송신자, 수신자)
-						sortMessage(messageArr, name, messageArr[1]);
+						// checkMessage( 내용, 송신자, 수신자)
+						checkUserName(messageArr, name, messageArr[1]);
 						// /help가 입력되면 도움말 출력
 					} else if (messageArr[0].equalsIgnoreCase("/help")) {
 						alarm = "help";
 						alarmMessage(name, alarm);
 						// "/"가 포함되었으나 형식이 잘못되었거나 지정 명령어가 아닐때
-					} else if (messageArr[0].indexOf("/") == 0 && !messageArr[0].equalsIgnoreCase("/help")) {
+					} else if ( messageArr.length != 1 && messageArr[0].indexOf("/") == 0 && !messageArr[0].equalsIgnoreCase("/help")) {
 						alarm = "warn";
 						alarmMessage(name, alarm);
 					} else {
