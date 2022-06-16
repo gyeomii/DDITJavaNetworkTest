@@ -191,17 +191,22 @@ public class MultiChatServer {
 				// 한 클라이언트가 보낸 메세지를 다른 모든 클라이언트에게 보내준다.
 				while (dis != null) {
 					String userMessage = dis.readUTF();
+					
 					// 0이면 귓속말, -1이면 일반 대화
 					String[] messageArr = userMessage.split(" ");
+					
 					// 귓속말 판별 ( 1. /w 이후에 보낼 대상이 있을것, 2. /w가 포함될 것
 					if (messageArr.length != 1 && messageArr[0].equalsIgnoreCase("/w")) {
+						
 						// 귓속말 메소드 실행
 						// checkMessage( 내용, 송신자, 수신자)
 						checkUserName(messageArr, name, messageArr[1]);
+						
 						// /help가 입력되면 도움말 출력
 					} else if (messageArr[0].equalsIgnoreCase("/help")) {
 						alarm = "help";
 						alarmMessage(name, alarm);
+						
 						// "/"가 포함되었으나 형식이 잘못되었거나 지정 명령어가 아닐때
 					} else if ( messageArr.length != 1 && messageArr[0].indexOf("/") == 0 && !messageArr[0].equalsIgnoreCase("/help")) {
 						alarm = "warn";
